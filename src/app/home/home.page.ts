@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ImageModalPage } from '../image-modal/image-modal.page';
 import { UserPhoto, PhotoService } from '../services/photo.service';
 
@@ -12,7 +12,6 @@ export class HomePage{
 
   constructor(
     public photoService: PhotoService,
-    public actionSheetController: ActionSheetController,
     private modalCtrl: ModalController
     ) {}
   addPhotoToGallery() {
@@ -21,40 +20,16 @@ export class HomePage{
   async ngOnInit() {
     await this.photoService.loadSaved();
   }
-  public async showActionSheet(photo: UserPhoto, position: number) {
+  public async showImage(photo: UserPhoto, position: number)
+  {
     const modal = await this.modalCtrl.create({
       component: ImageModalPage,
       cssClass: 'transparent-modal',
       componentProps:{
-        photo
+        photo,
+        position
       }
     });
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Photos',
-      buttons: [{
-        text: 'View image',
-        icon: 'eye-outline',
-        handler: () => {
-          modal.present();
-        }
-      },
-      {
-        text: 'Delete',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          this.photoService.deletePicture(photo, position);
-        }
-      },
-       {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          // Nothing to do, action sheet is automatically closed
-         }
-      }]
-    });
-    await actionSheet.present();
+    modal.present();
   }
 }

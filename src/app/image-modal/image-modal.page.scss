@@ -1,20 +1,6 @@
 ion-content {
     --background: transparent;
 }
-
-ion-footer {
-    margin-bottom: 10px;
-    border: 1px solid white;
-    .ion-text-center{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        *{
-            background-color: beige;
-        }
-    }
-}
-
 ion-slides {
     height: 100%;
 }
